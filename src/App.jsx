@@ -24,24 +24,33 @@ function App() {
     fetchCategories();
   }, []);
 
-  useEffect(() => {
-  // Inject Botpress scripts
+useEffect(() => {
+  // Create Botpress main script
   const script1 = document.createElement('script');
   script1.src = 'https://cdn.botpress.cloud/webchat/v3.0/inject.js';
   script1.async = true;
 
-  const script2 = document.createElement('script');
-  script2.src = 'https://files.bpcontent.cloud/2025/06/12/06/20250612064655-9Y8WYUKR.js';
-  script2.async = true;
+  let script2; // Declare here so we can remove it later
+
+  // Once script1 is loaded, inject the config script
+  script1.onload = () => {
+    script2 = document.createElement('script');
+    script2.src = 'https://files.bpcontent.cloud/2025/06/12/06/20250612064655-9Y8WYUKR.js';
+    script2.async = true;
+    document.head.appendChild(script2);
+  };
 
   document.head.appendChild(script1);
-  document.head.appendChild(script2);
 
+  // Cleanup function
   return () => {
     document.head.removeChild(script1);
-    document.head.removeChild(script2);
+    if (script2) {
+      document.head.removeChild(script2);
+    }
   };
 }, []);
+
 
   const checkAuthStatus = async () => {
     try {
