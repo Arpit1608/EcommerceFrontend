@@ -24,6 +24,25 @@ function App() {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+  // Inject Botpress scripts
+  const script1 = document.createElement('script');
+  script1.src = 'https://cdn.botpress.cloud/webchat/v3.0/inject.js';
+  script1.async = true;
+
+  const script2 = document.createElement('script');
+  script2.src = 'https://files.bpcontent.cloud/2025/06/12/06/20250612064655-9Y8WYUKR.js';
+  script2.async = true;
+
+  document.head.appendChild(script1);
+  document.head.appendChild(script2);
+
+  return () => {
+    document.head.removeChild(script1);
+    document.head.removeChild(script2);
+  };
+}, []);
+
   const checkAuthStatus = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/check-auth', { withCredentials: true });
@@ -87,7 +106,7 @@ function App() {
     }
   };
 
-  // 🔍 Search handler
+  // Search handler
   const handleSearch = (query) => {
     const lowerQuery = query.toLowerCase();
     const results = products.filter((product) =>
