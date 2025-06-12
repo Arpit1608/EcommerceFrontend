@@ -1,0 +1,16 @@
+/* frontend/src/components/CategoryFilter.css */
+.category-filter select {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+}
+
+.category-filter select:focus {
+  outline: none;
+  border-color: #3498db;
+}
